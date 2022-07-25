@@ -24,7 +24,7 @@ def handle_client(conn, addr):
             msg = conn.recv(msg_length).decode(FORMAT)
             if first_connection == True:
                 if msg not in VALID_IDS:
-                    conn.send("Error".encode(FORMAT))   #Not a good error message, but intentional. Don't want to give attacker any information (like the fact that device IDs are captured)
+                    conn.send("Error: unauthenticated device".encode(FORMAT))   #Not a good error message, but intentional. Don't want to give attacker any information (like the fact that device IDs are captured)
                     connected = False
                     break
                 else:
