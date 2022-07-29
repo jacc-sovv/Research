@@ -7,10 +7,18 @@ SERVER = socket.gethostbyname(socket.gethostname())
 ADDR = (SERVER, PORT)
 FORMAT = 'utf-8'
 DISCONNECT_MESSAGE = "!DISCONNECT"
-VALID_IDS = ["311342B1-1E75-5B9F-BE28-3B28BD6850A7"]
+VALID_IDS = ["311342B1-1E75-5B9F-BE28-3B28BD6850A7"]        #<-That's my ID! Can add your own to get valid connection
+                                                            #check id.py to get your own ID
 
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server.bind(ADDR)
+
+def length_of_message(message):
+    message = message.encode(FORMAT)
+    msg_length = len(message)
+    send_length = str(msg_length).encode(FORMAT)
+    send_length += b' ' * (HEADER - len(send_length))
+    return send_length, message
 
 def handle_client(conn, addr):
     print(f"[NEW CONNECTION] {addr} connected.")
@@ -24,11 +32,11 @@ def handle_client(conn, addr):
             msg = conn.recv(msg_length).decode(FORMAT)
             if first_connection == True:
                 if msg not in VALID_IDS:
-                    conn.send("Error: unauthenticated device".encode(FORMAT))   #Not a good error message, but intentional. Don't want to give attacker any information (like the fact that device IDs are captured)
+                    conn.send("Error: unauthenticated device".encode(FORMAT)) 
                     connected = False
                     break
                 else:
-                    first_connection = False
+                    first_connection = False    #Valid ID!
             if msg == DISCONNECT_MESSAGE:
                 connected = False
 
