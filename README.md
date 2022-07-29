@@ -14,4 +14,11 @@ or not the ID is valid. It only needs to do this once per connection. The server
 ## How to use deviceID.py:
 
 1) Clone the github repo
-2) 
+2) Have two terminal instances open
+3) CD into directory of DeviceID folder
+4) Begin the server using python3 ./server.py
+4a) The server uses localhost on port 5050 to communicate with the client. This can be adjusted by changing the PORT and SERVER variables in client.py and server.py
+5) 
+
+# Planned updates:
+Wrap the sending part of the client in a general "start" function, to ensure that the ID is sent once rather than having to call a separate function for the first connection to the server.
