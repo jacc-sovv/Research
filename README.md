@@ -16,11 +16,11 @@ or not the ID is valid. It only needs to do this once per connection. The server
 1) Clone the github repo
 2) Have two terminal instances open
 3) CD into directory of DeviceID folder
-4) Begin the server using python3 ./server.py
+4) Begin the server using python3 ./server.py  
 4a) The server uses localhost on port 5050 to communicate with the client. This can be adjusted by changing the PORT and SERVER variables in client.py and server.py
 5) The client sends messages after the user hits the enter button at the moment. This is to make it clear to both the client and server that a message was sent.
-6) The client sends 3 messages and then disconnects
-6a) The disconnect message is !DISCONNECT
+6) The client sends 3 messages and then disconnects  
+6a) The disconnect message is !DISCONNECT. The messages are hard-coded, but can be adjusted. They can be of any size, since the protocol sends the message size as a header.
 7) Close the server terminal to shut down the server
 
 # Planned updates:
