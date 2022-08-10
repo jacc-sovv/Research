@@ -9,8 +9,7 @@ def get_id():
         print((id))
         return id
     else:
-
-        id = subprocess.Popen('hal-get-property --udi /org/freedesktop/Hal/devices/computer --key system.hardware.uuid'.split())
+        id = str(subprocess.check_output(['cat', '/etc/machine-id']), 'utf-8')
         print(id)
         return id
 
