@@ -6,11 +6,9 @@ import os
 def get_id():
     if 'nt' in os.name:
         id = str(subprocess.check_output('wmic csproduct get uuid')).split('\\r\\n')[1].strip('\\r').strip()
-        print((id))
         return id
     else:
-        id = str(subprocess.check_output('hal-get-property --udi /org/freedesktop/Hal/devices/computer --key system.hardware.uuid'.split()))
-        print(id)
+        id = str(subprocess.check_output(['cat', '/etc/machine-id']), 'utf-8')
         return id
 
 HEADER = 64
