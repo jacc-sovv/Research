@@ -42,18 +42,25 @@ def handle_client(conn, addr):
 
             print(f"[{addr}] {msg}")
             conn.send("Msg received".encode(FORMAT))
-
+    print(f"Disconnecting from {addr}")
     conn.close()
+    return
         
 
 def start():
     server.listen()
     print(f"[LISTENING] Server is listening on {SERVER}")
     while True:
-        conn, addr = server.accept()
-        thread = threading.Thread(target=handle_client, args=(conn, addr))
-        thread.start()
-        print(f"[ACTIVE CONNECTIONS] {threading.activeCount() - 1}")
+        try:
+            conn, addr = server.accept()
+            thread = threading.Thread(target=handle_client, args=(conn, addr))
+            thread.start()
+            print(f"[ACTIVE CONNECTIONS] {threading.activeCount() - 1}")
+        except KeyboardInterrupt:
+            thread.join()
+            if conn:
+                conn.close()
+            break
 
 
 print("[STARTING] server is starting...")
