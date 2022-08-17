@@ -32,7 +32,7 @@ vulnerability_dict = {"denial of service" : ["dos", "denial of service", "denial
                       "phishing" : ["phishing", "phish"],
                       "information disclosure" : ["information disclosure", "disclosure of information", "information-disclosure"],
                       "man in the middle" : ["man in the middle", "man-in-the-middle", "manipulator in the middle", "manipulator-in-the-middle"]}
-with open('output.csv', 'w') as f:
+with open('output(no cisco).csv', 'w') as f:
     writer = csv.writer(f, lineterminator='\n')
     writer.writerow(header)
     
@@ -52,6 +52,7 @@ with open('output.csv', 'w') as f:
                 results = response["results"]
                 names = ""
                 writer.writerow([vendor, product])
+                product_vulnerabilities = []
                 for vulnerability in results:
                     id = vulnerability["id"]
                     full_summary = vulnerability["summary"]
@@ -66,7 +67,11 @@ with open('output.csv', 'w') as f:
                         single_type = single_type[:-2]
                     else:
                         single_type = "N/A"
-                    writer.writerow(['', '', id, score, useful_summary, single_type])
+                    product_vulnerabilities.append(['', '', id, score, useful_summary, single_type])
+                   
+                product_vulnerabilities = sorted(product_vulnerabilities, key=itemgetter(3), reverse=True)
+                for vulnerability in product_vulnerabilities:
+                    writer.writerow(vulnerability)
 
 
 
