@@ -11,7 +11,7 @@ def parse_summary(text):
         index = text.index("). ") + 3
         return text[index:]
 
-file = open("./products", "r")
+file = open("./dnp", "r")
 lines = file.readlines()
 header = ['vendor', 'product', 'associated cve', 'cvss', 'cve description', 'vulnerability type(s)']
 cve_list = []
@@ -41,6 +41,11 @@ with open('output(no cisco).csv', 'w') as f:
             vendor = line.strip().lower()
         else:
             general_product = line.strip()
+
+            if vendor == "no vendor":
+                url = f"https://localhost/search/{general_product}"
+                r = requests.post(url, data="search=DNP3&vendor=&product=")
+
             url = f"https://localhost/api/search-vendor/{vendor}/{general_product}"
             response = requests.get(url, verify=False).json()
             product_list = response['product']
