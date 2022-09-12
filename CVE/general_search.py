@@ -32,7 +32,7 @@ vulnerability_dict = {"denial of service" : ["dos", "denial of service", "denial
                       "phishing" : ["phishing", "phish"],
                       "information disclosure" : ["information disclosure", "disclosure of information", "information-disclosure"],
                       "man in the middle" : ["man in the middle", "man-in-the-middle", "manipulator in the middle", "manipulator-in-the-middle"]}
-with open('output(no cisco).csv', 'w') as f:
+with open('output.csv', 'w') as f:
     writer = csv.writer(f, lineterminator='\n')
     writer.writerow(header)
     
@@ -44,6 +44,7 @@ with open('output(no cisco).csv', 'w') as f:
             url = f"https://localhost/api/search-vendor/{vendor}/{general_product}"
             response = requests.get(url, verify=False).json()
             product_list = response['product']
+            writer.writerow([vendor, general_product])
 
             for product in product_list:
                 product = product.strip()
@@ -51,23 +52,27 @@ with open('output(no cisco).csv', 'w') as f:
                 response = requests.get(api_url, verify=False).json()
                 results = response["results"]
                 names = ""
-                writer.writerow([vendor, product])
                 product_vulnerabilities = []
                 for vulnerability in results:
                     id = vulnerability["id"]
+                    year = int(id[4:8])
+                    if year < 2019:
+                        continue
                     full_summary = vulnerability["summary"]
                     score = vulnerability["cvss"]
-                    useful_summary = parse_summary(full_summary)
+                    #useful_summary = parse_summary(full_summary)
+                    useful_summary = full_summary
                     single_type = ""
                     for type in vulnerability_dict:
                         for variation in vulnerability_dict[type]:
-                            if variation in useful_summary.lower() and type not in single_type:
+                            if variation.lower() in useful_summary.lower() and type not in single_type:
                                 single_type += type + ", "
                     if single_type:
                         single_type = single_type[:-2]
                     else:
                         single_type = "N/A"
-                    product_vulnerabilities.append(['', '', id, score, useful_summary, single_type])
+                    if ['', '', id, score, useful_summary, single_type] not in product_vulnerabilities:
+                        product_vulnerabilities.append(['', '', id, score, useful_summary, single_type])
                    
                 product_vulnerabilities = sorted(product_vulnerabilities, key=itemgetter(3), reverse=True)
                 for vulnerability in product_vulnerabilities:
