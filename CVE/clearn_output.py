@@ -50,7 +50,7 @@ def checkVersion(product, product_version):
 
 
 #'main' is here
-with open("./output.csv", 'r') as inp, open('./output_clean.csv', 'w') as out:
+with open("./9-26-output.csv", 'r') as inp, open('./9-26-output_clean.csv', 'w') as out:
     written_vulns = []
     vendor = ''
     product = ''

@@ -1,0 +1,5 @@
+How does this work again? 
+
+Run container. Then, run general_search to generate an output file.
+Next, run clean_output with that file generated above. This will only apply vulnerabilities that are relevant (I think)
+Last, you might have to manually check the output. Hoorah!

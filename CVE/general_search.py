@@ -27,12 +27,12 @@ vulnerability_dict = {"denial of service" : ["dos", "denial of service", "denial
                       "http response splitting" : ["http response splitting"],
                       "bypass" : ["bypass"],
                       "gain privileges" : ["gain privileges", "elevation of privilege"],
-                      "csrf" : ["csrf", "cross site request forgery", "cross-site-request-forgery"],
+                      "csrf" : ["csrf", "cross site request forgery", "cross-site-request-forgery"],    
                       "cryptography" : ["cryptographic", "cryptography", "encrypt", "decyrpt", "encryption", "decryption"] ,
                       "phishing" : ["phishing", "phish"],
                       "information disclosure" : ["information disclosure", "disclosure of information", "information-disclosure"],
                       "man in the middle" : ["man in the middle", "man-in-the-middle", "manipulator in the middle", "manipulator-in-the-middle"]}
-with open('output.csv', 'w') as f:
+with open('9-26-output.csv', 'w') as f:
     writer = csv.writer(f, lineterminator='\n')
     writer.writerow(header)
     
